@@ -1,0 +1,22 @@
+{
+	"description": "Gelf Multi Log Driver as plugin",
+	"documentation": "https://github.com/stefansaftic/docker-gelf-multi-log-driver",
+	"entrypoint": ["/usr/bin/gelf-multi-log-driver"],
+	"interface": {
+		"types": ["docker.logdriver/1.0"],
+		"socket": "gelfmulti.sock"
+	},
+	"network": {
+		"type": "host"
+	},
+	"env": [
+		{
+			"name": "LOG_LEVEL",
+			"description": "Set log level to output for plugin logs",
+			"value": "info",
+			"settable": ["value"]
+		}
+	]
+}
+
+
