@@ -27,10 +27,20 @@ create:
 	@echo "### create new plugin ${PLUGIN_NAME}:${PLUGIN_TAG} from ./plugin"
 	docker plugin create ${PLUGIN_NAME}:${PLUGIN_TAG} ./plugin
 
+create-repo:
+	@echo "### remove existing plugin ${PLUGIN_NAME}:${PLUGIN_TAG} if exists"
+	docker plugin rm -f stefansaftic/${PLUGIN_NAME}:${PLUGIN_TAG} || true
+	@echo "### create new plugin ${PLUGIN_NAME}:${PLUGIN_TAG} from ./plugin"
+	docker plugin create stefansaftic/${PLUGIN_NAME}:${PLUGIN_TAG} ./plugin
+
 enable:
 	@echo "### enable plugin ${PLUGIN_NAME}:${PLUGIN_TAG}"
 	docker plugin enable ${PLUGIN_NAME}:${PLUGIN_TAG}
 
-push: clean docker rootfs create enable
+enable-repo:
+	@echo "### enable plugin ${PLUGIN_NAME}:${PLUGIN_TAG}"
+	docker plugin enable stefansaftic/${PLUGIN_NAME}:${PLUGIN_TAG}
+
+push: clean docker rootfs create-repo enable-repo
 	@echo "### push plugin ${PLUGIN_NAME}:${PLUGIN_TAG}"
 	docker plugin push stefansaftic/${PLUGIN_NAME}:${PLUGIN_TAG}
